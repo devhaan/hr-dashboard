@@ -1,0 +1,135 @@
+scalar Upload
+
+type Task {
+  _id: ID
+  taskTitle: String!
+  taskDescription: String
+  taskStatus: String!
+  taskType: String!
+  taskEndDate: Date!
+  taskAssignedTo: User
+}
+
+input CreateTaskInput {
+  taskTitle: String!
+  taskDescription: String
+  taskStatus: String!
+  taskType: String!
+  taskEndDate: Date!
+  taskAssignedTo: ID
+}
+
+input UpdateTaskInput {
+  taskTitle: String
+  taskDescription: String
+  taskStatus: String
+  taskType: String
+  taskEndDate: Date
+  taskAssignedTo: ID
+}
+
+type Query {
+  getTasks(
+    page: Int!
+    limit: Int!
+    taskStatus: String
+    taskType: String
+    startDate: String
+    endDate: String
+  ): [Task]!
+  getTaskById(id: ID!): Task
+}
+
+type Mutation {
+  createTask(createTaskDto: CreateTaskInput!): Task!
+  updateTask(id: ID!, updateTaskDto: UpdateTaskInput!): Task!
+  deleteTask(id: ID!): Task!
+}
+
+type Event {
+  _id: ID
+  eventTitle: String!
+  eventDescription: String
+  eventType: String!
+  eventEndDate: Date!
+}
+
+input CreateEventInput {
+  eventTitle: String!
+  eventDescription: String
+  eventType: String!
+  eventEndDate: Date!
+}
+
+input UpdateEventInput {
+  eventTitle: String
+  eventDescription: String
+  eventType: String
+  eventEndDate: Date
+}
+
+type Query {
+  getEvents(
+    page: Int!
+    limit: Int!
+    status: String
+    eventType: String
+    startDate: String
+    endDate: String
+  ): [Event]!
+  getEventById(id: ID!): Event
+}
+
+type Mutation {
+  createEvent(createEventDto: CreateEventInput!): Event!
+  updateEvent(id: ID!, updateEventDto: UpdateEventInput!): Event!
+  deleteEvent(id: ID!): Event!
+}
+
+type Feedback {
+  feedbackFirst: [FeedbackDetailsOutput]!
+  feedbackSecond: [FeedbackDetailsOutput]!
+  newJoin: ID
+}
+
+type FeedbackDetailsOutput {
+  regardingTeamWelcoming: String!
+  trainingModule: String!
+  NotClearUnderstandingAboutWorkRole: String!
+  regardingColleague: String!
+  companyCulture: String!
+}
+
+input FeedbackDetailsInput {
+  regardingTeamWelcoming: String!
+  trainingModule: String!
+  NotClearUnderstandingAboutWorkRole: String!
+  regardingColleague: String!
+  companyCulture: String!
+}
+
+input CreateFeedbackInput {
+  feedbackFirst: [FeedbackDetailsInput]!
+  newJoin: ID!
+}
+
+input UpdateFeedbackInput {
+  feedbackFirst: [FeedbackDetailsInput]!
+  feedbackSecond: [FeedbackDetailsInput]!
+}
+
+type Query {
+  getFeedbacks(
+    page: Int!
+    limit: Int!
+    startDate: String
+    endDate: String
+  ): [Feedback]!
+  getFeedbackById(id: ID!): Feedback
+}
+
+type Mutation {
+  createFeedback(createFeedbackDto: CreateFeedbackInput!): Feedback!
+  updateFeedback(id: ID!, updateFeedbackDto: UpdateFeedbackInput!): Feedback!
+  deleteFeedback(id: ID!): Feedback!
+}
